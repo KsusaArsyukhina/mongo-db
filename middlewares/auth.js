@@ -14,7 +14,6 @@ const checkAuth = (req, res, next) => {
   } catch (err) {
     return res.status(401).send({ message: "Необходима авторизация 2" });
   }
-
   next();
 };
 
