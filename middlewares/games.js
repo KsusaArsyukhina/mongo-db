@@ -73,6 +73,10 @@ const deleteGame = async (req, res, next) => {
 };
 
 const checkEmptyFields = async (req, res, next) => {
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (
     !req.body.title ||
     !req.body.description ||
@@ -94,6 +98,10 @@ const checkEmptyFields = async (req, res, next) => {
 
 const checkIfCategoriesAvaliable = async (req, res, next) => {
   // Проверяем наличие жанра у игры
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "application/json");
     res
@@ -110,7 +118,10 @@ const checkIfUsersAreSafe = async (req, res, next) => {
     next();
     return;
   }
-
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (req.body.users.length - 1 === req.game.users.length) {
     next();
     return;
